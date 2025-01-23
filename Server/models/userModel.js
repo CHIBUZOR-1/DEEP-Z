@@ -3,20 +3,24 @@ const mongoose = require('mongoose');
 const userSchema = new mongoose.Schema({
     firstname: {
         type: String,
-        required: true
+        required: function() { return !this.googleId; }
     },
     lastname: {
         type: String,
-        required: true
+        required: function() { return !this.googleId; }
+    },
+    username: {
+        type: String,
+        required: function() { return !this.googleId; }
     },
     phoneNumber: {
         type: String,
-        required: true
+        required: function() { return !this.googleId; }
     },
     email: {
         type: String,
         unique: true,
-        required: true
+        required: function() { return !this.googleId; }
     },
     profileImg: {
         type: String,
@@ -28,7 +32,7 @@ const userSchema = new mongoose.Schema({
     },
     password: {
         type: String,
-        required: true
+        required: function() { return !this.googleId; }
     },
     verified: {
         type: Boolean,
@@ -36,6 +40,11 @@ const userSchema = new mongoose.Schema({
     },
     verificationToken: {
         type: String
+    },
+    googleId: { 
+        type: String, 
+        unique: true, 
+        sparse: true // Allows for multiple null values 
     }
 }, {
     timestamps: true,

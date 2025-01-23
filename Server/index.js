@@ -8,6 +8,7 @@ const cookieParser = require('cookie-parser');
 const path = require("path");
 const crypto = require('crypto');
 const { connectDB } = require('./db');
+const userRouter = require('./Routes/authRoutes');
 
 const app = express();
 
@@ -34,7 +35,7 @@ const PORT = process.env.HOSTPORT;
 connectDB();
 
 
-
+app.use('/api/users', userRouter);
 app.get('/', (req, res) => {
     res.send("Welcome to ZONEY");
 });
