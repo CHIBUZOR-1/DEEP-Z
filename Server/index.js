@@ -9,12 +9,19 @@ const path = require("path");
 const crypto = require('crypto');
 const { connectDB } = require('./db');
 const userRouter = require('./Routes/authRoutes');
+const blogRouter = require('./Routes/blogRoutes');
+const commentRouter = require('./Routes/commentRoutes');
+const cloudinary = require('cloudinary').v2;
 
 const app = express();
 
 dotenv.config();
 
-
+cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 app.use(cors({
     origin: process.env.ORIGIN,
     methods: ["GET", "POST", "DELETE", "PUT", "PATCH"],
@@ -36,6 +43,8 @@ connectDB();
 
 
 app.use('/api/users', userRouter);
+app.use('/api/blogs', blogRouter);
+app.use('/api/comments', commentRouter);
 app.get('/', (req, res) => {
     res.send("Welcome to ZONEY");
 });

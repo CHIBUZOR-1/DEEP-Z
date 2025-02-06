@@ -44,10 +44,10 @@ const verifyToken = async (req, res, next) => {
 
  
 
-const isAdmin = async (req, res, next) => {
+const isAdminz = async (req, res, next) => {
     try {
-        const user = await userModel.findById(req.user.userId);
-        if(user.role !== "ADMIN") {
+        const user = await userModel.findById(req.user.userId).select('-password');
+        if(!user.isAdmin) {
             return res.status(401).json({
                 success: false,
                 message: "unauthorized"
@@ -64,4 +64,4 @@ const isAdmin = async (req, res, next) => {
     }
 }
 
-module.exports = { verifyToken, isAdmin, setCookiesWithToken };
+module.exports = { verifyToken, isAdminz, setCookiesWithToken };

@@ -6,13 +6,19 @@ import App from './App.jsx'
 import { Provider } from 'react-redux'
 import { persistor, store } from './Redux/store.js'
 import { PersistGate } from 'redux-persist/integration/react'
+import { DeepContextProvider } from './Context/DeepContext.jsx'
+import { ThemeProvider } from './Context/ThemeContext.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <BrowserRouter>
-          <App />
+          <ThemeProvider>
+            <DeepContextProvider>
+              <App />
+            </DeepContextProvider>
+          </ThemeProvider> 
         </BrowserRouter>
       </PersistGate>
     </Provider>

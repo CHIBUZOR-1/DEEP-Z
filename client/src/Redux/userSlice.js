@@ -23,6 +23,8 @@ export const userSlice = createSlice({
             if (state.user) { 
                 state.user.firstname = action.payload.firstname;
                 state.user.lastname = action.payload.lastname; 
+                state.user.email = action.payload.email;
+                state.user.username = action.payload.username;
             } 
         }
     },

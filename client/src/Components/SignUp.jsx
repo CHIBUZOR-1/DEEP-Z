@@ -57,7 +57,7 @@ const SignUp = ({change}) => {
                 <input type="password" name='password' value={info.password} onChange={handleChange} className='w-full text-slate-800 max-sm:text-sm outline-purple-500 p-2 border border-gray-400 rounded-md'  placeholder='password'/>
                 <input type="password" name='confirmPassword' value={info.confirmPassword} onChange={handleChange} className='w-full text-slate-800 max-sm:text-sm outline-purple-500 p-2 border border-gray-400 rounded-md' placeholder='confirm password'/>
             </div>
-            <button onClick={handleSubmit} className='w-[80%] bg-facebookDark-400 active:bg-orange-800 text-white font-semibold rounded-md p-2'>Sign Up</button>
+            <button onClick={handleSubmit} className='w-[80%] dark:border-purple-600 dark:border  bg-facebookDark-400 active:bg-orange-800 text-white font-semibold rounded-md p-2'>Sign Up</button>
             <div className="flex w-full gap-1 items-center">
               <hr  className='border-slate-300 w-full'/>
               <p className='text-slate-600'>or</p>

@@ -4,6 +4,7 @@ const crypto = require('crypto');
 const { setCookiesWithToken } = require('../Utilities/verifyToken');
 const userModel = require('../models/userModel');
 const jwt = require('jsonwebtoken');
+const cloudinary = require('cloudinary').v2;
 
 const signUp = async(req, res) => {
     try {
@@ -92,7 +93,8 @@ const signIn = async(req, res)=> {
             lastname: user.lastname,
             email: user.email,
             phone: user.phoneNumber,
-            profilePic: user.profileImg,
+            admin: user.isAdmin,
+            profilePic: user.profileImg
         };
         res.status(200).json({
             success: true,
@@ -235,7 +237,20 @@ const googleAuthLogin = async(req, res)=> {
 
 const updateProfile = async(req, res)=> {
     try {
-        
+        const { first, last, eml, uname} = req.body;
+        const user = await userModel.findByIdAndUpdate(req.user.userId, {
+            firstname: first,
+            lastname: last,
+            email: eml,
+            username: uname
+        }, { new: true});
+        if (!user) {
+            return res.status(404).json({ success: false, message: 'User not found' });
+        }
+        res.status(200).json({
+            success: true,
+            user
+        })
     } catch (error) {
         console.log(error);
         res.status(500).json({
@@ -246,4 +261,92 @@ const updateProfile = async(req, res)=> {
     }
 }
 
-module.exports = { signUp, signIn, signOut, googleAuthLogin, googleAuthSignUp, updateProfile, forgotPassword, verifyEmail, resetPassword }
+const getAllUsers = async(req, res)=> {
+    try {
+        const users = await userModel.find({}).select('-password');
+        res.status(200).json({
+            success: true,
+            users
+        })
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            success: false,
+            error: true,
+            message: "An error occurred!"
+        })
+    }
+}
+const updateUserRole = async (req, res) => {
+    try {
+        const { newRole } = req.body;
+        if(!newRole) {
+            return res.send({error: "role required"});
+        }
+        const roleUpdated = await userModel.findByIdAndUpdate(req.params.id, {isAdmin: newRole}, {new: true});
+        if(roleUpdated) {
+            res.json({
+                ok: true,
+                message: "Role update successful",
+                roleUpdated
+            })
+        } else {
+            res.json({
+                ok: false,
+                message: "Unable to update"
+            })
+        }
+    } catch (error) {
+        console.log(error);
+        res.json({
+            ok:false,
+            error: true,
+            message: "Error occured"
+        })
+    }
+}
+const updateProfilePhoto = async (req, res) => {
+    const { image } = req.body;
+    const userId = req.user.userId; // Assuming you have userId from authentication middleware
+  
+    try {
+      const user = await userModel.findById(userId);
+  
+      if (!user) {
+        return res.status(404).json({ error: 'User not found' });
+      }
+  
+      user.profileImg = image; // Update the profile photo URL
+      await user.save();
+  
+      res.status(200).json({ success: true, message: 'Profile photo updated successfully', user });
+    } catch (error) {
+      res.status(500).json({ error: 'Server error' });
+    }
+  };
+
+  const deleteUser = async(req, res)=> {
+    try {
+        const user = await userModel.findById(req.params.id);
+        if(!user) {
+            res.status(400).json({
+                ok: false,
+                msg: 'User not found'
+            })
+        }
+        if (user.imageId) {
+            await cloudinary.uploader.destroy(user.imageId, { resource_type: 'image' });
+        }
+        await userModel.findByIdAndDelete(req.params.id);
+        res.status(200).json({ ok: true, message: 'user deleted successfully' });
+    } catch (error) {
+        console.log(error);
+        res.json({
+            ok:false,
+            error: true,
+            message: "Error occured"
+        })
+    }
+  }
+
+module.exports = { signUp, signIn, deleteUser, getAllUsers, updateProfilePhoto, updateUserRole, signOut, googleAuthLogin, googleAuthSignUp, updateProfile, forgotPassword, verifyEmail, resetPassword }

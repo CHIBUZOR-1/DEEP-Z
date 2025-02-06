@@ -12,11 +12,11 @@ const ClientAuth = () => {
         'Sign-Up': <SignUp change={setActiveTab}/>
     };
   return (
-    <div className='h-screen flex justify-center pt-7'>
+    <div className='h-screen flex dark:bg-facebookDark-200 justify-center pt-7'>
         <div className='w-[90%] items-center shadow-lg flex flex-col'>
-            <h2 className='text-2xl font-semibold'>Welcome</h2>
-            <p className='text-slate-500 max-sm:text-sm font-semibold'>{activeTab === 'Sign-In' ?"Login with your details":'Fill in your details to get started'}</p>
-            <div className="w-[85%] mx-auto mt-10  rounded shadow-md"> 
+            <h2 className='text-2xl dark:text-slate-100 font-semibold'>Welcome</h2>
+            <p className='text-slate-500 dark:text-slate-300 max-sm:text-sm font-semibold'>{activeTab === 'Sign-In' ?"Login with your details":'Fill in your details to get started'}</p>
+            <div className="w-[85%] mx-auto mt-10 dark:bg-facebookDark-400 rounded shadow-md"> 
                 <TabNav tabs={tabs} activeTab={activeTab} onTabClick={setActiveTab} /> 
                 <TabContent content={content[activeTab]} /> 
             </div>  

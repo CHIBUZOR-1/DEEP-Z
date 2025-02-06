@@ -37,11 +37,12 @@ const SIgnIn = () => {
             
         }
       }
+      console.log(info)
   return (
-    <div className='flex flex-col items-center gap-2'>
+    <div className='flex flex-col dark:bg-facebookDark-400 items-center gap-2'>
         <input type="text" value={info.firstInput} name='firstInput' onChange={handleChange} className='w-full max-sm:text-sm outline-purple-500 p-2 border border-gray-400 rounded-md'  placeholder='Username/email' />
         <input type="password" value={info.password} name='password' onChange={handleChange} className='w-full max-sm:text-sm outline-purple-500 p-2 border border-gray-400 rounded-md'   placeholder='password'/>
-        <button onClick={handleSubmit} className='w-[80%] flex max-sm:text-sm items-center justify-center gap-2 bg-facebookDark-400 active:bg-orange-800 p-2 outline-purple-500 text-white font-semibold rounded-md'>
+        <button onClick={handleSubmit} className='w-[80%] dark:border-purple-600 dark:border  flex max-sm:text-sm items-center justify-center gap-2 bg-facebookDark-400 active:bg-orange-800 p-2 outline-purple-500 text-white font-semibold rounded-md'>
             sign in
         </button>
             <div className="flex w-full gap-1 items-center">
@@ -49,7 +50,7 @@ const SIgnIn = () => {
               <p className='text-slate-600'>or</p>
               <hr  className='border-slate-300  w-full'/>
             </div>
-        <button className='w-[80%] flex max-sm:text-sm items-center justify-center gap-2 bg-facebookDark-400 active:bg-orange-800 p-2 outline-purple-500 text-white font-semibold rounded-md'>
+        <button className='w-[80%] dark:border-purple-600 dark:border flex max-sm:text-sm items-center justify-center gap-2 bg-facebookDark-400 active:bg-orange-800 p-2 outline-purple-500 text-white font-semibold rounded-md'>
             continue with <FcGoogle className='text-xl'/>
         </button>
     </div>

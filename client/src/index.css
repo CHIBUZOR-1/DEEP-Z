@@ -2,3 +2,35 @@
 @tailwind components;
 @tailwind utilities;
 
+.custom-modal .ant-modal-content { @apply bg-white; /* Apply light mode background color */ } 
+.dark .custom-modal .ant-modal-content { @apply bg-facebookDark-300; /* Apply dark mode background color */}
+.dark .custom-modal .ant-modal-close { color: white; /* Change the color of the close button */ }
+.dark .ql-toolbar .ql-formats button,
+.dark .ql-toolbar .ql-formats .ql-picker-label,
+.dark .ql-toolbar .ql-formats .ql-picker-options {
+  color: white;
+  background-color: rgb(44, 42, 42); /* Change button and picker text color to white */
+  fill: white;  /* Change SVG icon color to white */
+}
+
+.scrollbar::-webkit-scrollbar {
+  width: 8px;
+  opacity: 0.5;
+}
+
+.scrollbar::-webkit-scrollbar-track {
+  background: #d3d1d1;
+  border-radius: 10px;
+}
+
+.scrollbar::-webkit-scrollbar-thumb {
+  opacity: 0.5;
+  background: #5a5a5a;
+  border-radius: 10px;
+}
+
+.tip p {
+  font-size: 14px;
+  font-style: italic;
+  font-weight: normal;
+}

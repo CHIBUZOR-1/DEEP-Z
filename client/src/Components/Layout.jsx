@@ -2,11 +2,11 @@ import React from 'react'
 import Navbar from './Navbar'
 import Footer from './Footer'
 
-const Layout = ({children, title, description}) => {
+const Layout = ({children}) => {
   return (
     <div>
       <Navbar/>
-      <main className=''>
+      <main className='pt-16 scrollbar min-h-screen'>
         {children}
       </main>
       <Footer/>
