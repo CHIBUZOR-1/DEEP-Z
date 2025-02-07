@@ -2,6 +2,8 @@ import axios from 'axios';
 import React, { useState } from 'react'
 import { FcGoogle } from "react-icons/fc";
 import { toast } from 'react-toastify';
+import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
+import { app } from '../ClientUtils/Firebase';
 
 const SignUp = ({change}) => {
   const [loading, setLoading] = useState(false);
@@ -44,6 +46,30 @@ const SignUp = ({change}) => {
       
       } 
   }
+
+  const handleGoogleOauth = async() => {
+    const auth = getAuth(app);
+    const provider = new GoogleAuthProvider();
+    provider.setCustomParameters({ prompt: 'select_account'})
+    try {
+      const oauthResults = await signInWithPopup(auth, provider)
+      console.log(oauthResults)
+      const userDetails = { 
+        firstname: oauthResults.user.displayName.split(' ')[0], 
+        lastname: oauthResults.user.displayName.split(' ').slice(-1).join(' '), 
+        username: oauthResults.user.displayName.replace(/\s+/g, '').toLowerCase(), 
+        email: oauthResults.user.email,
+        googleId: oauthResults.user.uid
+      };
+      const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/api/users/googleAuth`, userDetails);
+      if(data.success) {
+        toast.success(data.message);
+        change('Sign-In');
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
   
   return (
     <div className='w-full'>
@@ -63,7 +89,7 @@ const SignUp = ({change}) => {
               <p className='text-slate-600'>or</p>
               <hr  className='border-slate-300  w-full'/>
             </div>
-            <button className='w-[80%] bg-white border-orange-300 border active:bg-orange-200 flex items-center justify-center gap-2 max-sm:text-sm text-slate-700 font-semibold rounded-md p-2'><FcGoogle className='text-xl' /> Google</button>
+            <button onClick={handleGoogleOauth} className='w-[80%] bg-white border-orange-300 border active:bg-orange-200 flex items-center justify-center gap-2 max-sm:text-sm text-slate-700 font-semibold rounded-md p-2'><FcGoogle className='text-xl' /> Google</button>
         </div>
     </div>
   )

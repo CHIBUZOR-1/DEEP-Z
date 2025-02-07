@@ -10,6 +10,8 @@ import Avatarz from './Avatarz';
 import { IoIosArrowDropdownCircle } from "react-icons/io"
 import AvatarMenu from './AvatarMenu';
 import { toast } from 'react-toastify';
+import { FiSearch } from "react-icons/fi";
+
 
 
 const Navbar = () => {
@@ -60,8 +62,17 @@ const Navbar = () => {
     }
   return (
     <div className='w-full z-40 dark:border-b-purple-800 dark:border-b dark:bg-facebookDark-200 flex justify-between items-center p-1 bg-white h-16 shadow-md fixed'>
-        <div className='w-fit dark:border dark:border-purple-600 rounded-md'>
-            <img src={assets.deepz} className='w-14 h-14 rounded-md' alt="" />
+        <div className='w-fit sm:dark:border max-sm:flex gap-4 items-center sm:dark:border-purple-600 rounded-md'>
+            <img src={assets.deepz} className='w-14 max-sm:dark:border max-sm:dark:border-purple-600 h-14 rounded-md' alt="" />
+            <div className='sm:hidden group cursor-pointer p-2 border border-slate-300 rounded transition-all hover:border-purple-500'>
+              <FiSearch className='text-lg group-hover:text-gray-700 text-slate-400' /> 
+            </div>
+        </div>
+        <div className=' flex items-center max-sm:hidden p-1 dark:bg-slate-600 rounded-md border border-slate-300'>
+          <input type="text" name="" id="" className='p-1 dark:bg-slate-600 dark:text-slate-100 outline-none w-full' placeholder='search...' />
+          <div className='p-2 rounded-full '>
+           <FiSearch className='text-lg dark:text-slate-100 text-slate-400' /> 
+          </div>
         </div>
         <div className='flex max-md:hidden items-center justify-center gap-3'>
           <Link to={'/'} className='text-facebookDark-800 dark:text-slate-100 text-xl font-semibold'>Home</Link>

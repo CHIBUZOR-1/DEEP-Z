@@ -10,7 +10,7 @@ const AvatarMenu = ({refy1}) => {
   const { mode, toggleMode} = useTheme();
   const user = useSelector(state=> state?.user?.user)
   return (
-    <div ref={refy1} className='absolute shadow-md top-14 gap-1 flex p-1 w-40 dark:bg-facebookDark-300 z-10 flex-col rounded'>
+    <div ref={refy1} className='absolute shadow-md transition-all duration-300 ease-in top-14 gap-1 flex p-1 w-40 dark:bg-facebookDark-300 z-10 flex-col rounded'>
       {
         user?.admin ? 
         <Link to={'/dashboard?view=admin-panel'} className={`gap-2 ${!user?.id && 'hidden'} active:bg-green-300 text-slate-100 hover:border-green-300 hover:border border bg-facebookDark-300 border-slate-300  cursor-pointer font-semibold flex items-center p-2 rounded-md`}>

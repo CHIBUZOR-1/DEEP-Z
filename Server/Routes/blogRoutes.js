@@ -9,7 +9,7 @@ const storage = multer.memoryStorage();
 const upload = multer({storage:storage});
 
 blogRouter.post('/create-blog', verifyToken, isAdminz, createBlog);
-blogRouter.get('/all-blogs', verifyToken, isAdminz, findAllBlogs);
+blogRouter.get('/all-blogs', findAllBlogs);
 blogRouter.delete('/delete-blog/:id', verifyToken, isAdminz, deleteBlog);
 blogRouter.put('/edit-blog/:id', verifyToken, isAdminz, upload.single('file'), updateBlog)
 blogRouter.get('/blog-b/:id', verifyToken, blogById)

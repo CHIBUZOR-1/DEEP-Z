@@ -44,7 +44,7 @@ const AllBlogz = ({toggleView}) => {
   }
   
   return (
-    <div className='p-1 w-full dark:bg-facebookDark-300 h-screen'>
+    <div className='p-1 w-full overflow-x-auto scrollbar dark:bg-facebookDark-300 h-screen'>
       <div className='w-full flex sm:hidden'>
         <FaArrowLeft onClick={toggleView} className='dark:text-slate-100'/>
       </div>
@@ -67,16 +67,16 @@ const AllBlogz = ({toggleView}) => {
       }
       {
         allBlogz.length > 0 && !load && (
-          <div className='w-full flex items-center justify-center max-md:flex-shrink-0 max-sm:w-screen max-md:overflow-x-scroll p-1'>
-            <table className='w-full shadow-md rounded'>
+          <div className=' flex items-center justify-center max-md:w-screen p-1'>
+            <table className='w-full tb shadow-md rounded'>
               <thead className='text-slate-600 dark:bg-slate-500 max-sm:text-sm shadow-sm dark:text-slate-100'>
                 <tr className=''>
-                  <th>Created</th>
-                  <th className=''>Image</th>
-                  <th>Title</th>
-                  <th>Category</th>
-                  <th>Edit</th>
-                  <th>Delete</th>
+                  <th className='p-1 max-sm:text-sm'>Created</th>
+                  <th className='p-1 max-sm:text-sm'>Image</th>
+                  <th className='p-1 max-sm:text-sm'>Title</th>
+                  <th className='p-1 max-sm:text-sm'>Category</th>
+                  <th className='p-1 max-sm:text-sm'>Edit</th>
+                  <th className='p-1 max-sm:text-sm'>Delete</th>
                 </tr>
               </thead>
               <tbody className='w-full'>
