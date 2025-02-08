@@ -61,14 +61,28 @@ const editComment = async(req, res) => {
 }
 const getComments = async(req, res) => {
     try {
+        const startIndex = parseInt(req.query.startIndex) || 0;
+        const limit = parseInt(req.query.limit) || 9;
         const comments = await commentModel.find({}).sort({ createdAt: -1}).populate({
             path: 'by',
             select: '-password'
+        }).sort({UpdatedAt: -1}).skip(startIndex).limit(limit);
+        const totalComments = await commentModel.countDocuments({});
+        const now = new Date();
+        const oneMonthAgo= new Date(
+            now.getFullYear(),
+            now.getMonth() - 1,
+            now.getDate()
+        );
+        const lastMonthComments = await commentModel.countDocuments({
+            createdAt: { $gte: oneMonthAgo },
         });
         res.status(200).json({
             ok: true,
             msg: 'Fetched',
-            comments
+            comments,
+            totalComments,
+            lastMonthComments
         })
     } catch (error) {
         console.log(error);

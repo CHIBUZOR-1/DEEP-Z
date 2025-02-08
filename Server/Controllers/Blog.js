@@ -126,42 +126,43 @@ const updateBlog = async(req, res)=> {
         })
     }
 }
-const likeUnlikeBlog = async(req, res)=> {
-    try {
-        const blog = await blogModel.findById(req.params.id);
-        if(!blog) {
-            return res.json({
-                error: true,
-                message: "Not found"
-            })
-        }
-        const likedBlog = blog.likes.includes(req.user.userId);
-        if(likedBlog) {
-            // unlike Post
-            blog.likes.pull(req.user.userId);
-            await blog.save();
-        } else {
-            blog.likes.push(req.user.userId)
-            await blog.save();
-        }
-        const updatedBlog = await blogModel.findById(req.params.id)
-        res.status(200).json({success: true, message: "Blog Like", updatedBlog})
-    } catch (error) {
-        console.log(error)
-        res.status(500).json({
-            error: true,
-            message: "Error!"
-        })
-    }
-}
 
 
 const findAllBlogs = async(req, res)=> {
     try {
-        const blogs = await blogModel.find({}).sort({createdAt: -1})
+        const startIndex = parseInt(req.query.startIndex) || 0;
+        const limit = parseInt(req.query.limit) || 9;
+        const sortOrder = req.query.sort === 'asc' ? 1 : -1;
+        const query = {};
+
+        // Building the query object conditionally
+        if (req.query.kword) {
+            query.$or = [
+                { title: { $regex: req.query.kword, $options: "i" } },
+                { descp: { $regex: req.query.kword, $options: "i" } },
+            ];
+        }
+
+        if (req.query.caty) {
+            query.category = { $regex: req.query.caty, $options: "i" };
+        }
+        const blogs = await blogModel.find(query).sort({createdAt: sortOrder}).skip(startIndex).limit(limit);
+        const totalBlogs = await blogModel.countDocuments(query);
+        const now = new Date();
+        const oneMonthAgo= new Date(
+            now.getFullYear(),
+            now.getMonth() - 1,
+            now.getDate()
+        );
+        const lastMonthBlogs = await blogModel.countDocuments({
+            ...query,
+            createdAt: { $gte: oneMonthAgo },
+        });
         res.status(200).json({ 
             success: true,
-            blogs
+            blogs,
+            totalBlogs,
+            lastMonthBlogs
         })
     } catch (error) {
         console.log(error);

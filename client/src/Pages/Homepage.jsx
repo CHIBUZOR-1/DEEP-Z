@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import { assets } from '../assets/assets';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
+import ReactLoading from 'react-loading';
 
 const Homepage = () => {
   const user = useSelector(state=> state?.user?.user);
@@ -16,13 +17,12 @@ const Homepage = () => {
     }, []);
   const getAllBlogs = async()=> {
     setLoad(true)
-    const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/api/blogs/all-blogs`);
+    const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/api/blogs/all-blogs?limit=6`);
     if(data.success) {
       setAllBlogz(data?.blogs);
       setLoad(false)
     }
   }
-  console.log(allBlogz)
   return (
     <Layout>
       <div className=' dark:bg-facebookDark-200 min-h-screen w-full dark:text-slate-100'>
@@ -44,8 +44,17 @@ const Homepage = () => {
           </div>
           <div>
             {
+              load && (
+                <div className=' w-full h-screen flex justify-center pt-11'>
+                  <ReactLoading type='bars' color='purple'/>
+                </div>
+              )
+            }
+            {
               allBlogz.length === 0 && !load && (
-                <div></div>
+                <div className='h-screen flex pt-10 justify-center dark: text-slate-400 w-full'>
+                  <h2 className='font-semibold text-2xl'>No blogs Found!</h2>
+                </div>
               )
             }
             {
@@ -59,8 +68,8 @@ const Homepage = () => {
                             <img src={bg?.media} alt="" className='h-[260px] z-30 group-hover:h-52 w-full transition-all duration-300' />
                           </div>
                           <div className='p-3 flex flex-col gap-1'>
-                            <p className='text-lg font-semibold line-clamp-2 '>{bg?.title}</p>
-                            <span className='italic text-sm'>{bg?.category}</span>
+                            <p className='text-lg font-semibold line-clamp-2 dark:text-slate-100'>{bg?.title}</p>
+                            <span className='italic text-sm dark:text-slate-100'>{bg?.category}</span>
                             <Link to={user?.id ? `/vw-b/${bg?._id}` : '/deep-z-auth'} className='z-10 border transition-all duration-300 bg-slate-700 dark:bg-purple-700 font-semibold text-slate-100 rounded-md text-center py-1 group-hover:bottom-0 left-0 right-0 absolute bottom-[-200px]'>
                               Read article
                             </Link>

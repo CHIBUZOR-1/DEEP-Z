@@ -12,7 +12,9 @@ const AllBlogz = ({toggleView}) => {
   const [allBlogz, setAllBlogz] = useState([]);
   const [load, setLoad] = useState(false);
   const [show, setShow] = useState(false);
-  const [b, setB] = useState(null)
+  const [more, setMore] = useState(true)
+  const [b, setB] = useState(null);
+  const [ml, setMl] = useState(false);
   const navigate = useNavigate()
 
   useEffect(()=> {
@@ -20,11 +22,40 @@ const AllBlogz = ({toggleView}) => {
   }, []);
 
   const getAllBlogs = async()=> {
-    setLoad(true)
-    const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/api/blogs/all-blogs`);
-    if(data.success) {
-      setAllBlogz(data?.blogs);
-      setLoad(false)
+    setLoad(true);
+    try {
+      const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/api/blogs/all-blogs`);
+      if(data.success) {
+        setAllBlogz(data?.blogs);
+        setLoad(false)
+        if(data.blogs.length < 9) {
+          setMore(false);
+        }
+      }
+    } catch (error) {
+      console.error('Error fetching all blogs:', error);
+    } finally {
+        setLoad(false);
+    }
+    
+  } 
+
+  const handleShowMore = async() => {
+    setMl(true)
+    const startIndex = allBlogz.length;
+    try {
+      const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/api/blogs/all-blogs?startIndex=${startIndex}`);
+      if(data.ok) {
+        setAllBlogz(prev =>[...prev, ...data.blogs]);
+        if(data.blogs.length < 9) {
+          setMore(false);
+        }
+        setMl(false)
+      }
+    } catch (error) {
+      console.error('Error fetching all blogs:', error);
+    } finally {
+        setLoad(false);
     }
   }
   
@@ -67,7 +98,7 @@ const AllBlogz = ({toggleView}) => {
       }
       {
         allBlogz.length > 0 && !load && (
-          <div className=' flex items-center justify-center max-md:w-screen p-1'>
+          <div className=' flex flex-col items-center justify-center max-md:w-screen p-1'>
             <table className='w-full tb shadow-md rounded'>
               <thead className='text-slate-600 dark:bg-slate-500 max-sm:text-sm shadow-sm dark:text-slate-100'>
                 <tr className=''>
@@ -84,12 +115,12 @@ const AllBlogz = ({toggleView}) => {
                   allBlogz.map((us, i)=> {
                     return(
                       <tr key={i} onClick={()=> {navigate(`/vw-b/${us?._id}`), window.scrollTo(0,0)}} className='w-full cursor-pointer'>
-                        <td className='text-center max-md:text-sm  dark:text-slate-100 p-1'>{moment(us?.createdAt).format('ll')}</td>
+                        <td className='text-center max-md:text-sm max-sm:text-xs  dark:text-slate-100 p-1'>{moment(us?.createdAt).format('ll')}</td>
                         <td className='flex w-full justify-center items-center dark:text-slate-100 p-1'><img className='h-12 w-full object-cover' src={us?.media} alt={us?.media} /></td>
-                        <td className='text-center max-md:text-sm  dark:text-slate-100 p-1'>{us?.title}</td>
-                        <td className=' text-center max-md:text-sm  dark:text-slate-100 p-1'>{us?.category}</td>
-                        <td className=' text-center max-md:text-sm  p-1'><Button onClick={(e)=> { e.stopPropagation(); navigate(`/ed-b/${us?._id}`)}}><MdEdit /></Button></td>
-                        <td className=' text-center max-md:text-sm  p-1'><Button onClick={(e)=> { e.stopPropagation(); setShow(true); setB(us)}}><MdDelete /></Button></td>
+                        <td className='text-center max-md:text-sm max-sm:text-xs  dark:text-slate-100 p-1'>{us?.title}</td>
+                        <td className=' text-center max-md:text-sm max-sm:text-xs  dark:text-slate-100 p-1'>{us?.category}</td>
+                        <td className=' text-center max-md:text-sm max-sm:text-xs  p-1'><Button onClick={(e)=> { e.stopPropagation(); navigate(`/ed-b/${us?._id}`)}}><MdEdit /></Button></td>
+                        <td className=' text-center max-md:text-sm max-sm:text-xs  p-1'><Button onClick={(e)=> { e.stopPropagation(); setShow(true); setB(us)}}><MdDelete /></Button></td>
                       </tr>
                     )
                     
@@ -108,6 +139,14 @@ const AllBlogz = ({toggleView}) => {
             </Modal>
           </div>
         )
+      }
+      {
+                    more && (
+                      <div className='w-full p-1 flex items-center justify-center'>
+                        <button onClick={handleShowMore} className='dark:text-slate-100 gap-2 font-medium text-blue-600 flex items-center dark:hover:text-blue-500 p-1'>Show more {ml && <ReactLoading type='spin' height={10} width={10} color='blue'/>}</button>
+                      </div>
+                      
+                    )
       }
       
     </div>

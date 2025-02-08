@@ -11,8 +11,14 @@ import { useNavigate } from 'react-router-dom';
 
 const DashBoardPanel = ({toggleView}) => {
    const [allUsers, setAllUsers] = useState([]);
+   const [tu, setTu] = useState('');
+   const [lmu, setLmu] = useState('');
    const [allBlogz, setAllBlogz] = useState([]);
+   const [tb, setTb] = useState('');
+   const [lmb, setLmb] = useState('');
    const [allComments, setAllComments] = useState([]);
+   const [tc, setTc] = useState('');
+   const [lmc, setLmc] = useState('');
    const [bload, setBload] = useState(false);
    const [uload, setUload] = useState(false);
    const [cload, setCload] = useState(false);
@@ -29,14 +35,18 @@ const DashBoardPanel = ({toggleView}) => {
     const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/api/users/all-users`);
     if(data?.success) {
       setAllUsers(data.users)
+      setTu(data.totalUsers)
+      setLmu(data.lastMonthUsers)
       setUload(false);
     }
   }
   const getAllBlogs = async()=> {
     setBload(true)
-    const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/api/blogs/all-blogs`);
+    const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/api/blogs/all-blogs?limit=5`);
     if(data.success) {
       setAllBlogz(data?.blogs);
+      setTb(data.totalBlogs);
+      setLmb(data.lastMonthBlogs)
       setBload(false)
     }
   }
@@ -45,6 +55,8 @@ const DashBoardPanel = ({toggleView}) => {
     const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/api/comments/get-all`);
     if(data.ok) {
       setAllComments(data.comments)
+      setTc(data.totalComments);
+      setLmc(data.lastMonthComments)
       setCload(false)
     }
   }
@@ -70,12 +82,12 @@ const DashBoardPanel = ({toggleView}) => {
                   <HiUsers className='text-blue-600' />
                 </div>
                 <div className='w-full flex items-center justify-start pr-1'>
-                  <p className='font-semibold dark:text-slate-100'>{allUsers.length}</p>
+                  <p className='font-semibold dark:text-slate-100'>{tu}</p>
                 </div>
                 <div className='flex gap-2 w-full items-center justify-start'>
                   <div className='flex items-center justify-start'>
                     <HiArrowNarrowUp className='text-green-500 text-xs dark:text-green-400'/>
-                    <p className='text-xs dark:text-slate-100 font-semibold'>{allUsers.length}</p>
+                    <p className='text-xs dark:text-slate-100 font-semibold'>{lmu}</p>
                   </div>
                   
                   <p className='font-semibold dark:text-slate-100'>Last update</p>
@@ -91,12 +103,12 @@ const DashBoardPanel = ({toggleView}) => {
                   <HiUsers className='text-blue-600' />
                 </div>
                 <div className='w-full flex items-center justify-start pr-1'>
-                  <p className='font-semibold dark:text-slate-100'>{allUsers.length}</p>
+                  <p className='font-semibold dark:text-slate-100'>{tu}</p>
                 </div>
                 <div className='flex gap-2 w-full items-center justify-start'>
                   <div className='flex items-center justify-start'>
                     <HiArrowNarrowUp className='text-green-500 text-xs dark:text-green-400'/>
-                    <p className='text-xs dark:text-slate-100 font-semibold'>{allUsers.length}</p>
+                    <p className='text-xs dark:text-slate-100 font-semibold'>{lmu}</p>
                   </div>
                   
                   <p className='font-semibold dark:text-slate-100'>Last update</p>
@@ -119,15 +131,15 @@ const DashBoardPanel = ({toggleView}) => {
               <>
                 <div className='flex w-full items-center justify-between'>
                   <p className='dark:text-slate-100 font-semibold'>TOTAL BLOGS</p>
-                  <TbLogs className='text-purple-700 dark:text-purple-400' />
+                  <TbLogs className='text-green-600 dark:text-purple-400' />
                 </div>
                 <div className='w-full flex items-center justify-start pr-1'>
-                  <p className='font-semibold dark:text-slate-100'>{allBlogz.length}</p>
+                  <p className='font-semibold dark:text-slate-100'>{tb}</p>
                 </div>
                 <div className='flex gap-2 w-full items-center justify-start'>
                   <div className='flex items-center justify-start'>
                     <HiArrowNarrowUp className='text-green-500 text-xs dark:text-green-400'/>
-                    <p className='text-xs dark:text-slate-100 font-semibold'>{allBlogz.length}</p>
+                    <p className='text-xs dark:text-slate-100 font-semibold'>{lmb}</p>
                   </div>
                   
                   <p className='font-semibold dark:text-slate-100'>Last update</p>
@@ -141,15 +153,15 @@ const DashBoardPanel = ({toggleView}) => {
               <>
                 <div className='flex w-full items-center justify-between'>
                   <p className='dark:text-slate-100 font-semibold'>TOTAL BLOGS</p>
-                  <TbLogs className='text-purple-700 dark:text-purple-400' />
+                  <TbLogs className='text-green-600 dark:text-purple-400' />
                 </div>
                 <div className='w-full flex items-center justify-start pr-1'>
-                  <p className='font-semibold dark:text-slate-100'>{allBlogz.length}</p>
+                  <p className='font-semibold dark:text-slate-100'>{tb}</p>
                 </div>
                 <div className='flex gap-2 w-full items-center justify-start'>
                   <div className='flex items-center justify-start'>
                     <HiArrowNarrowUp className='text-green-500 text-xs dark:text-green-400'/>
-                    <p className='text-xs dark:text-slate-100 font-semibold'>{allBlogz.length}</p>
+                    <p className='text-xs dark:text-slate-100 font-semibold'>{lmb}</p>
                   </div>
                   
                   <p className='font-semibold dark:text-slate-100'>Last update</p>
@@ -175,12 +187,12 @@ const DashBoardPanel = ({toggleView}) => {
                   <FaComments className='text-purple-700 dark:text-purple-400' />
                 </div>
                 <div className='w-full flex items-center justify-start pr-1'>
-                  <p className='font-semibold dark:text-slate-100'>{allComments.length}</p>
+                  <p className='font-semibold dark:text-slate-100'>{tc}</p>
                 </div>
                 <div className='flex gap-2 w-full items-center justify-start'>
                   <div className='flex items-center justify-start'>
                     <HiArrowNarrowUp className='text-green-500 text-xs dark:text-green-400'/>
-                    <p className='text-xs dark:text-slate-100 font-semibold'>{allComments.length}</p>
+                    <p className='text-xs dark:text-slate-100 font-semibold'>{lmc}</p>
                   </div>
                   
                   <p className='font-semibold dark:text-slate-100'>Last update</p>
@@ -197,12 +209,12 @@ const DashBoardPanel = ({toggleView}) => {
                   <FaComments className='text-purple-700 dark:text-purple-400' />
                 </div>
                 <div className='w-full flex items-center justify-start pr-1'>
-                  <p className='font-semibold dark:text-slate-100'>{allComments.length}</p>
+                  <p className='font-semibold dark:text-slate-100'>{tc}</p>
                 </div>
                 <div className='flex gap-2 w-full items-center justify-start'>
                   <div className='flex items-center justify-start'>
                     <HiArrowNarrowUp className='text-green-600 text-xs dark:text-purple-400'/>
-                    <p className='text-xs dark:text-slate-100 font-semibold'>{allComments.length}</p>
+                    <p className='text-xs dark:text-slate-100 font-semibold'>{lmc}</p>
                   </div>
                   
                   <p className='font-semibold dark:text-slate-100'>Last update</p>

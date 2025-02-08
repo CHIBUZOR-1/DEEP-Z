@@ -1,7 +1,7 @@
 const express = require('express');
 const blogRouter = express.Router();
 const multer = require('multer');
-const { createBlog, findAllBlogs, deleteBlog, updateBlog, blogById } = require('../Controllers/Blog');
+const { createBlog, findAllBlogs, deleteBlog, updateBlog, blogById} = require('../Controllers/Blog');
 const { verifyToken, isAdminz } = require('../Utilities/verifyToken');
 const cloudinary = require('cloudinary').v2;
 
@@ -12,7 +12,7 @@ blogRouter.post('/create-blog', verifyToken, isAdminz, createBlog);
 blogRouter.get('/all-blogs', findAllBlogs);
 blogRouter.delete('/delete-blog/:id', verifyToken, isAdminz, deleteBlog);
 blogRouter.put('/edit-blog/:id', verifyToken, isAdminz, upload.single('file'), updateBlog)
-blogRouter.get('/blog-b/:id', verifyToken, blogById)
+blogRouter.get('/blog-b/:id', verifyToken, blogById);
 blogRouter.post('/upload-post-file', verifyToken, upload.single('file'), async (req, res) => { 
     if (!req.file) { 
       return res.status(400).send('No file uploaded'); 

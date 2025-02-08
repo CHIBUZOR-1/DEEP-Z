@@ -19,6 +19,7 @@ import AllBlogz from './Pages/ADMIN/AllBlogz';
 import EditBlog from './Pages/EditBlog';
 import ViewBlog from './Pages/ViewBlog';
 import AllComments from './Pages/ADMIN/AllComments';
+import Search from './Pages/Search';
 
 const App = () => {
   const [loading, setLoading] = useState(true)
@@ -50,11 +51,12 @@ const App = () => {
         <Route element={<AdminPrivacy/>} >
           <Route path='/create-blog' element={<NewBlog/>}/>
           <Route path='/ed-b/:id' element={<EditBlog />} />
-          <Route path='/vw-b/:id' element={<ViewBlog />} />
         </Route>
         <Route element={<UserPrivacy/>} >
           <Route path='/user' element={<UserDashboard/>}/>
         </Route>
+        <Route path='/vw-b/:id' element={<ViewBlog />} />
+        <Route path='/search' element={<Search />} />
         <Route path='/unauthorized' element={<UnAuthorized />} />
       </Routes>
     </>

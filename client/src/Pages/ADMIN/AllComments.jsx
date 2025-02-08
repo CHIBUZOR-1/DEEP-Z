@@ -14,6 +14,8 @@ const AllComments = ({toggleView}) => {
   const [load, setLoad] = useState(false);
   const [comment, setComment] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
+  const [more, setMore] = useState(true);
+  const [ml, setMl] = useState(false);
 
    useEffect(()=> {
     getAllcoms();
@@ -25,6 +27,27 @@ const AllComments = ({toggleView}) => {
     if(data.ok) {
       setAllComs(data.comments);
       setLoady(false);
+      if(data.comments.length < 9) {
+        setMore(false);
+      }
+    }
+  }
+  const handleShowMore = async() => {
+    setMl(true)
+    const startIndex = allComs.length;
+    try {
+      const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/api/comments/get-all?startIndex=${startIndex}`);
+      if(data.ok) {
+        setAllComs(prev =>[...prev, ...data.comments]);
+        if(data.comments.length < 9) {
+          setMore(false);
+        }
+        setMl(false)
+      }
+    } catch (error) {
+      console.error('Error fetching all users:', error);
+    } finally {
+        setLoad(false);
     }
   }
   const cancelOpen = ()=> {
@@ -39,6 +62,7 @@ const AllComments = ({toggleView}) => {
       setComment(null);
       toast.success(data?.msg)
       setLoad(false)
+      setIsOpen(false)
     }
   }
   return (
@@ -83,11 +107,11 @@ const AllComments = ({toggleView}) => {
                   allComs.map((cm, i)=> {
                     return(
                       <tr key={i} className='w-full'>
-                        <td className='text-center max-sm:text-sm dark:text-slate-100 p-1'>{moment(cm?.updateAt).format('ll')}</td>
-                        <td className='text-center dark:text-slate-100 max-sm:text-sm p-1'><Avatarz height={25} width={25} image={cm?.by?.profileImg} /></td>
-                        <td className='text-center dark:text-slate-100 max-sm:text-sm p-1'>{cm?.content}</td>
-                        <td className='text-center dark:text-slate-100 max-sm:text-sm p-1'>{cm?.likes.length}</td>
-                        <td className=' text-center dark:text-slate-100 max-sm:text-sm p-1'>{cm?.blogId}</td>
+                        <td className='text-center  dark:text-slate-100 max-sm:text-xs p-1'>{moment(cm?.updateAt).format('ll')}</td>
+                        <td className='text-center dark:text-slate-100 max-sm:text-xs p-1'><Avatarz height={25} width={25} image={cm?.by?.profileImg} /></td>
+                        <td className='text-center dark:text-slate-100 max-sm:text-xs p-1'>{cm?.content}</td>
+                        <td className='text-center dark:text-slate-100 max-sm:text-xs p-1'>{cm?.likes.length}</td>
+                        <td className=' text-center dark:text-slate-100 max-sm:text-xs p-1'>{cm?.blogId}</td>
                         <td className=' text-center p-1'><Button onClick={()=> { setIsOpen(true); setComment(cm)}}><MdDelete /></Button></td>
                       </tr>
                     )
@@ -96,8 +120,18 @@ const AllComments = ({toggleView}) => {
                 }
               </tbody>
             </table>
+            
           </div>
+          
         )
+      }
+      {
+              more && (
+                <div className='w-full p-1 flex items-center justify-center'>
+                  <button onClick={handleShowMore} className='dark:text-slate-100 gap-2 font-medium text-blue-600 flex items-center dark:hover:text-blue-500 p-1'>Show more {ml && <ReactLoading type='spin' height={10} width={10} color='blue'/>}</button>
+                </div>
+                
+              )
       }
       <Modal open={isOpen} className='custom-modal' footer={null} onCancel={cancelOpen} >
             <div className='w-full flex items-center justify-center p-3'>

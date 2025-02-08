@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { assets } from '../assets/assets'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios'
 import { logout } from '../Redux/userSlice';
@@ -11,14 +11,17 @@ import { IoIosArrowDropdownCircle } from "react-icons/io"
 import AvatarMenu from './AvatarMenu';
 import { toast } from 'react-toastify';
 import { FiSearch } from "react-icons/fi";
+import { SlLogout } from 'react-icons/sl';
 
 
 
 const Navbar = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const location = useLocation();
     const [menuDrop, setMenuDrop] = useState(false);
     const [avDrop, setAvDrop] = useState(false);
+    const [kword, setKword] = useState('');
     const user= useSelector(state=> state?.user?.user);
     const dropdownRef = useRef(null); 
     const iconRef = useRef(null);
@@ -37,7 +40,14 @@ const Navbar = () => {
       return () => { 
         document.removeEventListener("mousedown", handleClickOutside); 
       }; 
-    }, []);  
+    }, []); 
+    useEffect(()=> {
+      const urlParams = new URLSearchParams(location.search);
+      const searchfromUrl = urlParams.get('kword');
+      if(searchfromUrl) {
+        setKword(searchfromUrl)
+      }
+    }, [location.search]);
     useEffect(() => {
       document.addEventListener("mousedown", handleClickOutside1); 
       return () => { 
@@ -60,18 +70,28 @@ const Navbar = () => {
     const handleDrop= ()=> {
       setMenuDrop(prev => !prev)
     }
+
+    const handleSearch = (e) => {
+      e.preventDefault();
+      const urlParams = new URLSearchParams(location.search);
+      urlParams.set('kword', kword);
+      const searchQuery = urlParams.toString();
+      navigate(`/search?${searchQuery}`)
+
+    }
+
   return (
     <div className='w-full z-40 dark:border-b-purple-800 dark:border-b dark:bg-facebookDark-200 flex justify-between items-center p-1 bg-white h-16 shadow-md fixed'>
         <div className='w-fit sm:dark:border max-sm:flex gap-4 items-center sm:dark:border-purple-600 rounded-md'>
-            <img src={assets.deepz} className='w-14 max-sm:dark:border max-sm:dark:border-purple-600 h-14 rounded-md' alt="" />
-            <div className='sm:hidden group cursor-pointer p-2 border border-slate-300 rounded transition-all hover:border-purple-500'>
+            <img onClick={()=> navigate(`/`)} src={assets.deepz} className='w-14 max-sm:dark:border max-sm:dark:border-purple-600 h-14 rounded-md' alt="" />
+            <div onClick={()=> navigate(`/search`)} className='sm:hidden group cursor-pointer p-2 border border-slate-300 rounded transition-all hover:border-purple-500'>
               <FiSearch className='text-lg group-hover:text-gray-700 text-slate-400' /> 
             </div>
         </div>
         <div className=' flex items-center max-sm:hidden p-1 dark:bg-slate-600 rounded-md border border-slate-300'>
-          <input type="text" name="" id="" className='p-1 dark:bg-slate-600 dark:text-slate-100 outline-none w-full' placeholder='search...' />
+          <input type="text" name="kword" value={kword} onChange={(e)=> setKword(e.target.value)} className='p-1 dark:bg-slate-600 dark:text-slate-100 outline-none w-full' placeholder='search...' />
           <div className='p-2 rounded-full '>
-           <FiSearch className='text-lg dark:text-slate-100 text-slate-400' /> 
+           <FiSearch onClick={handleSearch} className='text-lg cursor-pointer dark:text-slate-100 text-slate-400' /> 
           </div>
         </div>
         <div className='flex max-md:hidden items-center justify-center gap-3'>
@@ -87,7 +107,7 @@ const Navbar = () => {
           {
             user?.id ? 
             <div className='flex gap-3 justify-between items-center'>
-              <button onClick={handleLogOut} className='bg-facebookDark-500 dark:border dark:border-purple-600 p-2 text-slate-50 rounded-md font-semibold'>Sign out</button>
+              <button onClick={handleLogOut} className='bg-facebookDark-500 dark:border dark:border-purple-600 p-2 text-slate-50 rounded-md flex items-center gap-2 font-semibold'><SlLogout  className='text-white'/> Sign out</button>
             </div> : 
             <div className='flex gap-3 justify-between items-center'>
                 <button onClick={()=> navigate('/deep-z-auth')} className='bg-facebookDark-500 p-2 dark:border dark:border-purple-600 text-slate-50 rounded-md font-semibold'>Sign in/Get started</button>

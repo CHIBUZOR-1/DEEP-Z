@@ -6,6 +6,8 @@ import axios from 'axios';
 import { calculateTime } from '../ClientUtils/CalculateMoment';
 import { IoIosThumbsUp } from "react-icons/io";
 import { Button, Modal } from 'antd';
+import ReactLoading from 'react-loading';
+
 
 
 const CommentsSection = ({ bId }) => {
@@ -16,6 +18,7 @@ const CommentsSection = ({ bId }) => {
     const [isEditing, setIsEditing] = useState(null);
     const [isOpen, setIsOpen] = useState(false)
     const [dId, setDid] = useState('')
+    const [load, setLoad] = useState(false);
 
     useEffect(()=> {
         getBlogComments();
@@ -23,13 +26,14 @@ const CommentsSection = ({ bId }) => {
 
     const handleSubmit = async(e) => {
         e.preventDefault()
+        setLoad(true)
         const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/api/comments/create-comment`, {comt, bId});
         if(data.ok) {
             setComt('')
             setComs(prevComs=> [data?.popComment, ...prevComs])
+            setLoad(false)
         }
     }
-    console.log(user?.id);
 
     const toggleEdit = (cd)=> {
         setIsEditing(prev => prev === cd ? null : cd)
@@ -43,6 +47,8 @@ const CommentsSection = ({ bId }) => {
     const modalClose = ()=> {
         setIsOpen(false);
     }
+    console.log(user?.id)
+    console.log(coms)
 
     const getBlogComments = async() => {
         const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/api/comments/getComments/${bId}`);
@@ -74,8 +80,6 @@ const CommentsSection = ({ bId }) => {
             setDid(null)
         }
     }
-    console.log(dId)
-    console.log(coms)
     
   return (
     <div className='w-full shadow-md flex flex-col p-1 items-center justify-center'>
@@ -104,7 +108,7 @@ const CommentsSection = ({ bId }) => {
                         <textarea required value={comt} onChange={(e)=> setComt(e.target.value)} placeholder='Add comment...' maxLength={200}  className='rounded border outline-none w-full font-semibold p-1' name="comt" rows={3} id=""/>
                         <div className='w-full flex items-center justify-between p-1'>
                             <p className=' max-md:text-xs font-semibold dark:text-slate-100'>{200 - comt.length} characters remaining</p>
-                            <button type='submit' disabled={comt.length > 200} className='font-semibold hover:bg-purple-700 hover:text-slate-100 p-2 rounded-md border border-purple-600 bg-white active:text-orange-400'>Submit</button>
+                            <button type='submit' disabled={comt.length > 200} className='font-semibold hover:bg-purple-700 hover:text-slate-100 p-2 rounded-md border flex items-center border-purple-600 bg-white active:text-orange-400'>{load ? <span className='flex items-center justify-center'><ReactLoading type='bars' height={30} width={30} color='white'/></span> :'Submit'}</button>
                         </div>
                     </form>  
                 </div>
@@ -162,7 +166,7 @@ const CommentsSection = ({ bId }) => {
                                                                 }
                                                             </button>
                                                             {
-                                                                user?.id === cm._id || user.admin && (
+                                                                (user.id === cm?.by?._id || user?.admin) && (
                                                                     <>
                                                                         <p onClick={()=> { toggleEdit(cm._id); setEcomt(cm.content)}} className='text-xs active:text-blue-500 cursor-pointer dark:text-slate-100'>Edit</p>
                                                                         <p onClick={()=>{setIsOpen(true) ; setDid(cm)}} className='text-xs active:text-blue-500 cursor-pointer dark:text-slate-100'>Delete</p>

@@ -6,6 +6,7 @@ import { useTheme } from '../Context/ThemeContext'
 import { CiLight } from "react-icons/ci";
 import { Switch } from 'antd';
 import { MdDarkMode } from "react-icons/md";
+import { SlLogout } from "react-icons/sl";
 
 const MenuList = ({refy, logout}) => {
   const { mode, toggleMode} = useTheme();
@@ -31,7 +32,7 @@ const MenuList = ({refy, logout}) => {
         {
             user?.id ? 
             <div className='flex gap-3 w-full justify-between items-center'>
-              <button onClick={logout} className='bg-facebookDark-500 w-full dark:border dark:border-slate-300 p-2 text-slate-50 rounded-md font-semibold'>Sign out</button>
+              <button onClick={logout} className='bg-facebookDark-500 w-full dark:border dark:border-slate-300 p-2 text-slate-50 rounded-md flex items-center gap-2 font-semibold'><SlLogout  className='text-white'/> Sign out</button>
             </div> : 
             <div className='flex w-full gap-3 justify-between items-center'>
                 <button onClick={()=> navigate('/deep-z-auth')} className='bg-facebookDark-500 w-full p-2 dark:border dark:border-slate-300 text-sm py-2 text-slate-50 rounded-md font-semibold'>Sign in/Get started</button>

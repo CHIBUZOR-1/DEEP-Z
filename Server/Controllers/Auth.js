@@ -211,15 +211,15 @@ const googleAuthLogin = async(req, res)=> {
             return res.status(400).json({ success: false, message: "User not found or incorrect credentials" }); 
         }
         setCookiesWithToken(user._id, res);
-        socketToken(user._id, res);
         const details = {
             id: user._id,
+            username: user.username,
             firstname: user.firstname,
             lastname: user.lastname,
             email: user.email,
-            gender: user.gender,
-            profilePic: user.profileImg,
-            coverImage: user.coverImg
+            phone: user.phoneNumber,
+            admin: user.isAdmin,
+            profilePic: user.profileImg
         };
         res.status(200).json({
             success: true,
@@ -263,10 +263,24 @@ const updateProfile = async(req, res)=> {
 
 const getAllUsers = async(req, res)=> {
     try {
-        const users = await userModel.find({}).select('-password');
+        const startIndex = parseInt(req.query.startIndex) || 0;
+        const limit = parseInt(req.query.limit) || 9;
+        const users = await userModel.find({}).select('-password').sort({UpdatedAt: -1}).skip(startIndex).limit(limit);
+        const totalUsers = await userModel.countDocuments({});
+        const now = new Date();
+        const oneMonthAgo= new Date(
+            now.getFullYear(),
+            now.getMonth() - 1,
+            now.getDate()
+        );
+        const lastMonthUsers = await userModel.countDocuments({
+            createdAt: { $gte: oneMonthAgo },
+        });
         res.status(200).json({
             success: true,
-            users
+            users,
+            totalUsers,
+            lastMonthUsers
         })
     } catch (error) {
         console.log(error);
@@ -277,6 +291,7 @@ const getAllUsers = async(req, res)=> {
         })
     }
 }
+
 const updateUserRole = async (req, res) => {
     try {
         const { newRole } = req.body;

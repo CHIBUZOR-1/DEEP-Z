@@ -14,11 +14,12 @@ const ViewBlog = () => {
     const getById = async() => {
       const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/api/blogs/blog-b/${id}`);
       if(data.success) {
-        setView(data?.blog);
+        setView(data.blog);
       }
 
     }
     console.log(view)
+    console.log(view?.descp?.length)
   return (
     <Layout>
       <div className='h-screen overflow-x-auto scrollbar w-full dark:bg-facebookDark-200'>

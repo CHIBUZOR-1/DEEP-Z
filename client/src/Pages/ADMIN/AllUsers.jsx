@@ -21,6 +21,8 @@ const AllUsers = ({toggleView}) => {
   const [isOpen, setIsOpen] = useState(false);
   const [load, setLoad] = useState(false)
   const [user, setUser] = useState(null);
+  const [more, setMore] = useState(true);
+  const [ml, setMl] = useState(false);
 
   useEffect(()=> {
     getAll();
@@ -33,6 +35,27 @@ const AllUsers = ({toggleView}) => {
     if(data?.success) {
       setAllUsers(data.users)
       setLoading(false);
+      if(data.users.length < 9) {
+        setMore(false);
+      }
+    }
+  }
+  const handleShowMore = async() => {
+    setMl(true)
+    const startIndex = allUsers.length;
+    try {
+      const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/api/users/all-users?startIndex=${startIndex}`);
+      if(data.success) {
+        setAllUsers(prev =>[...prev, ...data.users]);
+        if(data.users.length < 9) {
+          setMore(false);
+        }
+        setMl(false)
+      }
+    } catch (error) {
+      console.error('Error fetching all users:', error);
+    } finally {
+        setLoad(false);
     }
   }
 
@@ -97,11 +120,11 @@ const AllUsers = ({toggleView}) => {
               <thead className='text-slate-600 max-sm:text-sm shadow-sm dark:bg-slate-500 dark:text-slate-100'>
                 <tr className=''>
                   <th className=''>Image</th>
-                  <th>Username</th>
-                  <th>Email</th>
-                  <th>Admin</th>
-                  <th>Edit</th>
-                  <th>Delete</th>
+                  <th className='text-center p-1'>Username</th>
+                  <th className='text-center p-1'>Email</th>
+                  <th className='text-center p-1'>Admin</th>
+                  <th className='text-center p-1'>Edit</th>
+                  <th className='text-center p-1'>Delete</th>
                 </tr>
                 
               </thead>
@@ -110,12 +133,12 @@ const AllUsers = ({toggleView}) => {
                   allUsers.map((us, i)=> {
                     return(
                       <tr key={i} className='w-full'>
-                        <td className='flex justify-center p-1'><Avatarz height={50} width={50} image={us?.profileImg}/></td>
-                        <td className='text-center dark:text-slate-100 p-1'>{us?.username}</td>
-                        <td className='text-center dark:text-slate-100 p-1'>{us?.email}</td>
+                        <td className='flex items-center justify-center p-1'><Avatarz height={50} width={50} image={us?.profileImg}/></td>
+                        <td className='text-center max-sm:text-xs dark:text-slate-100 p-1'>{us?.username}</td>
+                        <td className='text-center max-sm:text-xs dark:text-slate-100 p-1'>{us?.email}</td>
                         <td className=' text-center  dark:text-slate-100 p-1'>{us.isAdmin? <span className='flex text-green-400 items-center justify-center'><GoVerified /></span> : <span className='flex text-red-400 items-center justify-center'><TbEyeCancel /></span>}</td>
-                        <td className=' text-center p-1'><Button onClick={()=> { setVisible(true); setUser(us); setNewRole(us.isAdmin)}}><MdEdit /></Button></td>
-                        <td className=' text-center p-1'><Button onClick={()=> { setIsOpen(true); setUser(us)}}><MdDelete /></Button></td>
+                        <td className=' text-center max-sm:text-xs p-1'><Button onClick={()=> { setVisible(true); setUser(us); setNewRole(us.isAdmin)}}><MdEdit /></Button></td>
+                        <td className=' text-center max-sm:text-xs p-1'><Button onClick={()=> { setIsOpen(true); setUser(us)}}><MdDelete /></Button></td>
                       </tr>
                     )
                     
@@ -125,6 +148,14 @@ const AllUsers = ({toggleView}) => {
             </table>
           </div>
         )
+      }
+      {
+              more && (
+                <div className='w-full p-1 flex items-center justify-center'>
+                  <button onClick={handleShowMore} className='dark:text-slate-100 gap-2 font-medium text-blue-600 flex items-center dark:hover:text-blue-500 p-1'>Show more {ml && <ReactLoading type='spin' height={10} width={10} color='blue'/>}</button>
+                </div>
+                
+              )
       }
 
       <Modal open={isOpen} className='custom-modal' footer={null} onCancel={cancelM} >

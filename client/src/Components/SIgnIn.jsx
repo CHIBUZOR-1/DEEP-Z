@@ -5,6 +5,8 @@ import { useDispatch } from 'react-redux';
 import {setUser} from '../Redux/userSlice';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
+import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
+import { app } from '../ClientUtils/Firebase';
 
 const SIgnIn = () => {
     const navigate = useNavigate();
@@ -37,6 +39,27 @@ const SIgnIn = () => {
             
         }
       }
+      const handleGoogleLogin = async() => {
+        const auth = getAuth(app);
+        const provider = new GoogleAuthProvider();
+        provider.setCustomParameters({ prompt: 'select_account'})
+        try {
+          const oauthResults = await signInWithPopup(auth, provider)
+          console.log(oauthResults)
+          const userData = { 
+            email: oauthResults.user.email,
+            googleId: oauthResults.user.uid
+          };
+          const{ data } = await axios.post(`${import.meta.env.VITE_API_URL}/api/users/googleAuthLogin`, userData);
+          if(data.success) {
+            toast.success(data.message);
+            dispatch(setUser(data.details));
+            navigate('/');
+          }
+        } catch (error) {
+          console.log(error)
+        }
+      }
       console.log(info)
   return (
     <div className='flex flex-col dark:bg-facebookDark-400 items-center gap-2'>
@@ -50,8 +73,8 @@ const SIgnIn = () => {
               <p className='text-slate-600'>or</p>
               <hr  className='border-slate-300  w-full'/>
             </div>
-        <button className='w-[80%] dark:border-purple-600 dark:border flex max-sm:text-sm items-center justify-center gap-2 bg-facebookDark-400 active:bg-orange-800 p-2 outline-purple-500 text-white font-semibold rounded-md'>
-            continue with <FcGoogle className='text-xl'/>
+        <button onClick={handleGoogleLogin} className='w-[80%] dark:border-purple-600 dark:border flex max-sm:text-sm items-center justify-center gap-2 bg-white active:bg-orange-300 p-2 outline-purple-500 text-slate-700 font-semibold rounded-md'>
+           <FcGoogle className='text-xl' /> Google
         </button>
     </div>
   )
