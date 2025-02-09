@@ -51,7 +51,7 @@ app.use((req, res, next) => {
         fontSrc: ["'self'", "https://fonts.gstatic.com"],
         objectSrc: ["'none'"],
         mediaSrc: ["'self'", "blob:", "https://res.cloudinary.com"],
-        frameSrc: ["'self'", "https://accounts.google.com"],
+        frameSrc: ["'self'", "https://deep-z.firebaseapp.com", "https://accounts.google.com"],
         baseUri: ["'self'"],
         formAction: ["'self'"],
       }
