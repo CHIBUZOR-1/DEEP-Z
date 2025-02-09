@@ -75,7 +75,7 @@ const SIgnIn = () => {
               <p className='text-slate-600'>or</p>
               <hr  className='border-slate-300  w-full'/>
             </div>
-        <button onClick={handleGoogleLogin} className='w-[80%] dark:border-purple-600 dark:border flex max-sm:text-sm items-center justify-center gap-2 bg-white active:bg-orange-300 p-2 outline-purple-500 text-slate-700 font-semibold rounded-md'>
+        <button onClick={handleGoogleLogin} className='w-[80%] border-orange-300   border flex max-sm:text-sm items-center justify-center gap-2 bg-white active:bg-orange-300 p-2 outline-purple-500 text-slate-700 font-semibold rounded-md'>
            <FcGoogle className='text-xl' /> Google
         </button>
     </div>
