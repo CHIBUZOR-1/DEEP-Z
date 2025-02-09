@@ -47,8 +47,6 @@ const CommentsSection = ({ bId }) => {
     const modalClose = ()=> {
         setIsOpen(false);
     }
-    console.log(user?.id)
-    console.log(coms)
 
     const getBlogComments = async() => {
         const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/api/comments/getComments/${bId}`);

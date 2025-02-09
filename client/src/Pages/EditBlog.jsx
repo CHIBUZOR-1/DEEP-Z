@@ -13,7 +13,7 @@ const EditBlog = () => {
       newI: ''
     });
   const [b, setB] = useState({});
-  const [load, setLoad] = useState(false)
+  const [load, setLoad] = useState(false);
     const quillRef = useRef(null);
     const { id } = useParams();
     useEffect(()=> {
@@ -64,8 +64,6 @@ const EditBlog = () => {
       }
       setLoad(false);
     }
-
-    console.log(newBlog)
 
   return (
     <Layout>

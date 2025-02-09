@@ -46,7 +46,7 @@ app.use((req, res, next) => {
         defaultSrc: ["'self'"],
         scriptSrc: ["'self'", `'nonce-${res.locals.nonce}'`, "https://cdn.jsdelivr.net", "https://cdnjs.cloudflare.com", "https://apis.google.com"],
         styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com", "https://cdn.jsdelivr.net"],
-        imgSrc: ["'self'", "data:", "blob:", "https://res.cloudinary.com", "https://cdn.jsdelivr.net"],
+        imgSrc: ["'self'", "data:", "blob:", "https://res.cloudinary.com", "https://cdn.jsdelivr.net", "https://as2.ftcdn.net"],
         connectSrc: ["'self'", "https://res.cloudinary.com"],
         fontSrc: ["'self'", "https://fonts.gstatic.com"],
         objectSrc: ["'none'"],

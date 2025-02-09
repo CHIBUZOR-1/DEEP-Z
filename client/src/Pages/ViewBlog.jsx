@@ -18,8 +18,6 @@ const ViewBlog = () => {
       }
 
     }
-    console.log(view)
-    console.log(view?.descp?.length)
   return (
     <Layout>
       <div className='h-screen overflow-x-auto scrollbar w-full dark:bg-facebookDark-200'>

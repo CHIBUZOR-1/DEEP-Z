@@ -60,7 +60,6 @@ const SIgnIn = () => {
           console.log(error)
         }
       }
-      console.log(info)
   return (
     <div className='flex flex-col h-screenn dark:bg-facebookDark-400 items-center gap-2'>
         <input type="text" value={info.firstInput} name='firstInput' onChange={handleChange} className='w-full max-sm:text-sm dark:bg-slate-600 dark:text-slate-100 outline-purple-500 p-2 border border-gray-400 rounded-md'  placeholder='Username/email' />

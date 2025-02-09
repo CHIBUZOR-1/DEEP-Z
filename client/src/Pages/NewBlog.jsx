@@ -58,7 +58,6 @@ const NewBlog = () => {
       navigate(`/vw-b/${data?.blog?._id}`)
     }
   }
-  console.log(newBlog)
   return (
     <Layout>
       <div className='min-h-screen dark:bg-facebookDark-300'>

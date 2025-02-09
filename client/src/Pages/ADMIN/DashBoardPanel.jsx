@@ -63,7 +63,7 @@ const DashBoardPanel = ({toggleView}) => {
 
   return (
     <div className='dark:bg-facebookDark-200 overflow-y-auto scrollbar flex flex-col gap-1 p-1 h-screen'>
-      <button onClick={toggleView} className='text-white sm:hidden'><FaArrowLeft/></button>
+      <button onClick={toggleView} className='dark:text-white text-slate-700 sm:hidden'><FaArrowLeft/></button>
       <div className='grid grid-cols-1 md:grid-cols-3 gap-2 justify-center'>
         <div className='w-full border dark:border-slate-400 rounded-md p-1 shadow-lg'>
           {

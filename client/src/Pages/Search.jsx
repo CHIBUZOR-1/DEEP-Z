@@ -51,8 +51,6 @@ const Search = () => {
     getAllBlogs();
   }, [location.search]);
 
-  console.log(blogs)
-  console.log(dataz)
   const handleChange= (e)=> {
     if(e.target.name === 'kword') {
       setDataz({

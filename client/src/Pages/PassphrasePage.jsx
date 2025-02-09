@@ -34,7 +34,6 @@ const PassphrasePage = () => {
             setLoad(false);
         }
     }
-    console.log(dataz)
   return (
     <div className='h-screen w-full dark:bg-facebookDark-300 flex justify-center items-center'>
         <div className=' border border-purple-500 w-[80%] p-1 py-2 flex flex-col gap-2 items-center justify-center'>
