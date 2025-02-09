@@ -13,6 +13,7 @@ const SignUp = ({change}) => {
     username: "",
     email: "",
     phoneNumber: "",
+    passPhrase: '',
     password: "",
     confirmPassword: ""
   });
@@ -33,6 +34,7 @@ const SignUp = ({change}) => {
             username: "",
             email: "",
             phoneNumber: "",
+            passPhrase: "",
             password: "",
             confirmPassword: ""
           })
@@ -74,14 +76,15 @@ const SignUp = ({change}) => {
   return (
     <div className='w-full'>
         <div className='flex flex-col items-center gap-2 w-full'>
-            <input type="text" value={info.firstname} onChange={handleChange} name='firstname' className='w-full text-slate-800 max-sm:text-sm p-2 border outline-purple-500 border-gray-400 rounded-md'  placeholder='firstname'/>
-            <input type="text" value={info.lastname} onChange={handleChange} name='lastname' className='w-full text-slate-800 max-sm:text-sm p-2 border outline-purple-500 border-gray-400 rounded-md'  placeholder='lastname'/>
-            <input type="text" value={info.username} onChange={handleChange} className='w-full max-sm:text-sm text-slate-800 p-2 border outline-purple-500 border-gray-400 rounded-md'  name="username"  placeholder='Username'/>
-            <input type="email" value={info.email} onChange={handleChange} className='w-full max-sm:text-sm text-slate-800 p-2 border outline-purple-500 border-gray-400 rounded-md' name='email'  placeholder='email'/>
-            <input type="text" value={info.phoneNumber} onChange={handleChange} name='phoneNumber' className='w-full text-slate-800 max-sm:text-sm p-2 border outline-purple-500 border-gray-400 rounded-md'  placeholder='phone'/>
+            <input type="text" value={info.firstname} onChange={handleChange} name='firstname' className='w-full dark:bg-slate-600 dark:text-slate-100 text-slate-800 max-sm:text-sm p-2 border outline-purple-500 border-gray-400 rounded-md'  placeholder='firstname'/>
+            <input type="text" value={info.lastname} onChange={handleChange} name='lastname' className='w-full dark:bg-slate-600 dark:text-slate-100 text-slate-800 max-sm:text-sm p-2 border outline-purple-500 border-gray-400 rounded-md'  placeholder='lastname'/>
+            <input type="text" value={info.username} onChange={handleChange} className='w-full dark:bg-slate-600 dark:text-slate-100 max-sm:text-sm text-slate-800 p-2 border outline-purple-500 border-gray-400 rounded-md'  name="username"  placeholder='Username'/>
+            <input type="email" value={info.email} onChange={handleChange} className='w-full dark:bg-slate-600 dark:text-slate-100 max-sm:text-sm text-slate-800 p-2 border outline-purple-500 border-gray-400 rounded-md' name='email'  placeholder='email'/>
+            <input type="text" value={info.phoneNumber} onChange={handleChange} name='phoneNumber' className='w-full dark:bg-slate-600 dark:text-slate-100 text-slate-800 max-sm:text-sm p-2 border outline-purple-500 border-gray-400 rounded-md'  placeholder='phone'/>
+            <input type="text" value={info.passPhrase} onChange={handleChange} name='passPhrase' className='w-full dark:bg-slate-600 dark:text-slate-100 text-slate-800 max-sm:text-sm p-2 border outline-purple-500 border-gray-400 rounded-md'  placeholder='security phrase...'/>
             <div className='flex items-center max-[400px]:flex-col gap-1 justify-between w-full'>
-                <input type="password" name='password' value={info.password} onChange={handleChange} className='w-full text-slate-800 max-sm:text-sm outline-purple-500 p-2 border border-gray-400 rounded-md'  placeholder='password'/>
-                <input type="password" name='confirmPassword' value={info.confirmPassword} onChange={handleChange} className='w-full text-slate-800 max-sm:text-sm outline-purple-500 p-2 border border-gray-400 rounded-md' placeholder='confirm password'/>
+                <input type="password" name='password' value={info.password} onChange={handleChange} className='w-full dark:bg-slate-600 dark:text-slate-100 text-slate-800 max-sm:text-sm outline-purple-500 p-2 border border-gray-400 rounded-md'  placeholder='password'/>
+                <input type="password" name='confirmPassword' value={info.confirmPassword} onChange={handleChange} className='w-full dark:bg-slate-600 dark:text-slate-100 text-slate-800 max-sm:text-sm outline-purple-500 p-2 border border-gray-400 rounded-md' placeholder='confirm password'/>
             </div>
             <button onClick={handleSubmit} className='w-[80%] dark:border-purple-600 dark:border  bg-facebookDark-400 active:bg-orange-800 text-white font-semibold rounded-md p-2'>Sign Up</button>
             <div className="flex w-full gap-1 items-center">

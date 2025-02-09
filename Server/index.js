@@ -35,7 +35,29 @@ app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ extended: true}));
 app.use(cookieParser());
 
-
+app.use((req, res, next) => {
+  res.locals.nonce = crypto.randomBytes(16).toString('base64'); // Generate nonce
+  next();
+});
+app.use((req, res, next) => {
+  helmet({
+    contentSecurityPolicy: {
+      directives: {
+        defaultSrc: ["'self'"],
+        scriptSrc: ["'self'", `'nonce-${res.locals.nonce}'`, "https://cdn.jsdelivr.net", "https://cdnjs.cloudflare.com", "https://apis.google.com"],
+        styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com", "https://cdn.jsdelivr.net"],
+        imgSrc: ["'self'", "data:", "blob:", "https://res.cloudinary.com", "https://cdn.jsdelivr.net"],
+        connectSrc: ["'self'", "https://res.cloudinary.com"],
+        fontSrc: ["'self'", "https://fonts.gstatic.com"],
+        objectSrc: ["'none'"],
+        mediaSrc: ["'self'", "blob:", "https://res.cloudinary.com"],
+        frameSrc: ["'none'"],
+        baseUri: ["'self'"],
+        formAction: ["'self'"],
+      }
+    }
+  })(req, res, next);
+});
 
 const PORT = process.env.HOSTPORT;
 
@@ -45,6 +67,11 @@ connectDB();
 app.use('/api/users', userRouter);
 app.use('/api/blogs', blogRouter);
 app.use('/api/comments', commentRouter);
+app.use(express.static(path.join(__dirname, '../client/dist')));
+
+app.get('*', (req, res)=> {
+    res.sendFile(path.resolve(__dirname, '../client/dist', 'index.html'))
+})
 app.get('/', (req, res) => {
     res.send("Welcome to ZONEY");
 });

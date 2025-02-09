@@ -108,21 +108,21 @@ const Search = () => {
             <aside className='flex sm:flex-col p-2 max-sm:items-center  max-sm:w-full gap-4'>
               <div className='w-full p-1'>
                 <p className='font-semibold dark:text-slate-100'>Sort:</p>
-                <select value={dataz.sort} name='sort' onChange={handleChange}  className='w-full border outline-none border-slate-300 rounded-md' >
-                  <option value="desc">Latest</option>
-                  <option value="asc">Oldest</option>
+                <select value={dataz.sort} name='sort' onChange={handleChange}  className='w-full border outline-none dark:bg-slate-600 dark:text-slate-100 border-slate-300 rounded-md' >
+                  <option className='dark:bg-slate-600 dark:text-slate-100' value="desc">Latest</option>
+                  <option className='dark:bg-slate-600 dark:text-slate-100' value="asc">Oldest</option>
                 </select>
               </div>
               <div className='w-full p-1'>
                 <p className='font-semibold dark:text-slate-100'>categories:</p>
-                <select value={dataz.caty} name='caty' onChange={handleChange}  className='w-full border outline-none border-slate-300 rounded-md' >
-                <option className='dark:bg-slate-600' value="">none</option>
-                <option className='dark:bg-slate-600' value="Sports">Sports</option>
-                <option className='dark:bg-slate-600' value="Entertainment">Entertainment</option>
-                <option className='dark:bg-slate-600' value="Lifestyle">Lifestyle</option>
-                <option className='dark:bg-slate-600' value="Technology">Technology</option>
-                <option className='dark:bg-slate-600' value="Food">Food</option>
-                <option className='dark:bg-slate-600' value="Finance">Finance</option>
+                <select value={dataz.caty} name='caty' onChange={handleChange}  className='w-full border outline-none dark:bg-slate-600 dark:text-slate-100 border-slate-300 rounded-md' >
+                <option className='dark:bg-slate-600 dark:text-slate-100' value="">none</option>
+                <option className='dark:bg-slate-600 dark:text-slate-100' value="Sports">Sports</option>
+                <option className='dark:bg-slate-600 dark:text-slate-100' value="Entertainment">Entertainment</option>
+                <option className='dark:bg-slate-600 dark:text-slate-100' value="Lifestyle">Lifestyle</option>
+                <option className='dark:bg-slate-600 dark:text-slate-100' value="Technology">Technology</option>
+                <option className='dark:bg-slate-600 dark:text-slate-100' value="Food">Food</option>
+                <option className='dark:bg-slate-600 dark:text-slate-100' value="Finance">Finance</option>
                 </select>
               </div>
               <div className='w-full max-sm:hidden p-1'>

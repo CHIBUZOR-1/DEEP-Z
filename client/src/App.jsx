@@ -20,6 +20,9 @@ import EditBlog from './Pages/EditBlog';
 import ViewBlog from './Pages/ViewBlog';
 import AllComments from './Pages/ADMIN/AllComments';
 import Search from './Pages/Search';
+import ForgotPassword from './Pages/ForgotPassword';
+import PassphrasePage from './Pages/PassphrasePage';
+import ScrollToTop from './Components/ScrollToTop';
 
 const App = () => {
   const [loading, setLoading] = useState(true)
@@ -34,6 +37,7 @@ const App = () => {
   return (
     <>
       <ToastContainer className='max-sm:flex max-sm:w-[70%] max-sm:justify-center max-sm:text-sm' />
+      <ScrollToTop />
       <Routes>
         <Route path='/deep-z-auth' element={<ClientAuth/>}/>
         <Route path="/" element={<Homepage />} />
@@ -56,7 +60,9 @@ const App = () => {
           <Route path='/user' element={<UserDashboard/>}/>
         </Route>
         <Route path='/vw-b/:id' element={<ViewBlog />} />
+        <Route path='/reset-password' element={<ForgotPassword/>}/>
         <Route path='/search' element={<Search />} />
+        <Route path='/new-ps-sec' element={<PassphrasePage />} />
         <Route path='/unauthorized' element={<UnAuthorized />} />
       </Routes>
     </>

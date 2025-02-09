@@ -1,6 +1,6 @@
 const express = require('express');
 const userRouter = express.Router();
-const { signUp, signIn, signOut, updateProfile, googleAuthLogin, googleAuthSignUp, forgotPassword, resetPassword, verifyEmail, updateUserRole, updateProfilePhoto, getAllUsers, deleteUser } = require('../Controllers/Auth');
+const { signUp, signIn, signOut, updateProfile, googleAuthLogin, googleAuthSignUp, updateUserRole, updateProfilePhoto, getAllUsers, deleteUser, newPassPhrase, forgotPassword } = require('../Controllers/Auth');
 const { verifyToken, isAdminz } = require('../Utilities/verifyToken');
 const multer = require('multer');
 const userModel = require('../models/userModel');
@@ -15,8 +15,8 @@ userRouter.post('/signIn', signIn);
 userRouter.get('/logout', signOut);
 userRouter.post('/googleAuth', googleAuthSignUp);
 userRouter.post('/googleAuthLogin', googleAuthLogin);
-userRouter.post('/forgot-password', forgotPassword);
-userRouter.post('/reset-password/:token', resetPassword);
+userRouter.post('/reset-pw', forgotPassword);
+userRouter.post('/new-ph', newPassPhrase);
 userRouter.get('/all-users',  verifyToken, isAdminz, getAllUsers)
 userRouter.post('/newProfilePhoto', verifyToken, updateProfilePhoto);
 userRouter.put('/update-profile', verifyToken, updateProfile);
