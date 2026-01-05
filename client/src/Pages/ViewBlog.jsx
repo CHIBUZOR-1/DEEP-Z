@@ -20,7 +20,7 @@ const ViewBlog = () => {
     }
   return (
     <Layout>
-      <div className='h-screen overflow-x-auto scrollbar w-full dark:bg-facebookDark-200'>
+      <div className=' w-full dark:bg-facebookDark-200'>
         <div className='w-full flex items-center p-2 justify-center'>
           <h1 className='font-bold text-center dark:text-slate-100 text-2xl'>{view?.title}</h1>
         </div>

@@ -84,10 +84,10 @@ const CommentsSection = ({ bId }) => {
         {
             user? (
                 <div className='flex max-md:w-[90%] w-[60%] gap-1 p-1 items-center justify-start'>
-                    <p className=' text-sm dark:text-slate-100 font-semibold'>Signed In as:</p>
+                    <p className=' text-sm dark:text-slate-100 max-zs:text-[9px] font-semibold'>Signed In as:</p>
                     <Avatarz image={user?.profilePic} height={20} width={20}/>
                     <Link to={'/dashboard?view=admin-profile'}>
-                        <p className='text-sm font-semibold hover:underline text-blue-400'>@{user?.username}</p>
+                        <p className='text-sm font-semibold max-zs:text-xs hover:underline text-blue-400'>@{user?.username}</p>
                     </Link>
                 </div>
             ) : (
@@ -99,6 +99,7 @@ const CommentsSection = ({ bId }) => {
                 </div>
             )
         }
+        {/* Add Comment Form if logged in */}
         {
             user && (
                 <div className=' max-md:w-[90%] flex items-center justify-center w-[60%]'>
@@ -106,18 +107,20 @@ const CommentsSection = ({ bId }) => {
                         <textarea required value={comt} onChange={(e)=> setComt(e.target.value)} placeholder='Add comment...' maxLength={200}  className='rounded border outline-none w-full font-semibold p-1' name="comt" rows={3} id=""/>
                         <div className='w-full flex items-center justify-between p-1'>
                             <p className=' max-md:text-xs font-semibold dark:text-slate-100'>{200 - comt.length} characters remaining</p>
-                            <button type='submit' disabled={comt.length > 200} className='font-semibold hover:bg-purple-700 hover:text-slate-100 p-2 rounded-md border flex items-center border-purple-600 bg-white active:text-orange-400'>{load ? <span className='flex items-center justify-center'><ReactLoading type='bars' height={30} width={30} color='white'/></span> :'Submit'}</button>
+                            <button type='submit' disabled={comt.length > 200} className='font-semibold hover:bg-purple-700 max-zs:text-xs hover:text-slate-100 p-2 rounded-md border flex items-center border-purple-600 bg-white active:text-orange-400'>{load ? <span className='flex items-center justify-center'><ReactLoading type='bars' height={30} width={30} color='white'/></span> :'Submit'}</button>
                         </div>
                     </form>  
                 </div>
                 
             )
         }
+        {/* If no Comments */}
         {
             coms.length === 0 && (
                 <p className='text-sm font-semibold text-slate-400'>No comments yet</p>
             )
         }
+        {/* If Article has comments */}
         {
             coms.length > 0 && (
                 <div className='w-[60%] space-y-2 max-md:w-[90%] p-1'>
@@ -137,6 +140,7 @@ const CommentsSection = ({ bId }) => {
                                                 <p className='text-xs dark:text-slate-100'>{calculateTime(cm?.updatedAt)}</p>
                                             </div>
                                             {
+                                                // iF editing comment
                                                 isEditing === cm._id ? (
                                                     <div  className='p-1 border rounded-md w-full'>
                                                         <textarea required value={eComt} onChange={(e)=> setEcomt(e.target.value)} placeholder='Add comment...' maxLength={200}  className='rounded border outline-none w-full font-semibold p-1' name="eComt" rows={3} id=""/>
@@ -151,6 +155,7 @@ const CommentsSection = ({ bId }) => {
                                                     </div>
                                                 ) : (
                                                     <>
+                                                        {/* This is For  comment */}
                                                         <div>
                                                             <p className='p-1 dark:text-slate-100 max-sm:text-sm'>{cm?.content}</p>
                                                         </div>

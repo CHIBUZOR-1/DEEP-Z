@@ -21,6 +21,23 @@ export default {
           900: '#6a6a6a',
         }, 
       },
+      boxShadow: {
+        glow: '0px 0px 10px 5px #475569',
+      },
+      screens: {
+        zs: '281px',
+        xs: '480px',         // Extra small devices
+        '3xl': '1920px',     // Ultra-wide monitors
+      },
+      fontFamily: {
+        rubik: ['"Rubik Distressed"', 'serif'],
+        anton: ['"Anton"', 'serif'],
+        roboto: ['"Roboto"', 'serif'],
+        aquafina: ['"Aguafina Script"', 'serif'],
+        oswald: ['"Oswald"', 'serif'],
+        playwrite: ['"Playwrite CA"', 'serif'],
+        sourcecode: ['"Source Code Pro"', 'monospace'],
+      },
     },
   },
   plugins: [],

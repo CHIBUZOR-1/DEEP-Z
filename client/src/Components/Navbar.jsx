@@ -83,23 +83,23 @@ const Navbar = () => {
   return (
     <div className='w-full z-40 dark:border-b-purple-800 dark:border-b dark:bg-facebookDark-200 flex justify-between items-center p-1 bg-white h-16 shadow-md fixed'>
         <div className='w-fit sm:dark:border max-sm:flex gap-4 items-center sm:dark:border-purple-600 rounded-md'>
-            <img onClick={()=> navigate(`/`)} src={assets.deepz} className='w-14 max-sm:dark:border max-sm:dark:border-purple-600 h-14 rounded-md' alt="" />
+            <img onClick={()=> navigate(`/`)} src={assets.deepz} className='w-14 max-zs:w-10 max-zs:h-10 cursor-pointer hover:shadow-glow hover:shadow-purple-400 max-sm:dark:border max-sm:dark:border-purple-600 h-14 rounded-md' alt="" />
             <div onClick={()=> navigate(`/search`)} className='sm:hidden group cursor-pointer p-2 border border-slate-300 rounded transition-all hover:border-purple-500'>
               <FiSearch className='text-lg group-hover:text-gray-700 text-slate-400' /> 
             </div>
         </div>
-        <div className=' flex items-center max-sm:hidden p-1 dark:bg-slate-600 rounded-md border border-slate-300'>
+        <div className=' flex shadow-glow shadow-slate-100 dark:shadow-none items-center max-sm:hidden p-1 dark:bg-slate-600 rounded-md border border-slate-300'>
           <input type="text" name="kword" value={kword} onChange={(e)=> setKword(e.target.value)} className='p-1 dark:bg-slate-600 dark:text-slate-100 outline-none w-full' placeholder='search...' />
           <div className='p-2 rounded-full '>
            <FiSearch onClick={handleSearch} className='text-lg cursor-pointer dark:text-slate-100 text-slate-400' /> 
           </div>
         </div>
         <div className='flex max-md:hidden items-center justify-center gap-3'>
-          <Link to={'/'} className='text-facebookDark-800 dark:text-slate-100 text-xl font-semibold'>Home</Link>
-          <Link to={'/about'} className='text-facebookDark-800 dark:text-slate-100 text-xl font-semibold'>About</Link>
+          <Link to={'/'} className='text-facebookDark-800 dark:shadow-purple-500 shadow-glow shadow-slate-200 hover:border hover:border-purple-500 p-1 rounded-md  dark:text-slate-100 text-xl font-semibold'>Home</Link>
+          <Link to={'/about'} className='text-facebookDark-800 dark:shadow-purple-500 shadow-glow shadow-slate-200 hover:border hover:border-purple-500 p-1 rounded-md  dark:text-slate-100 text-xl font-semibold'>About</Link>
         </div>
         <div className='flex items-center max-md:hidden justify-center gap-4'>
-          <div ref={iconRef1} className='flex relative dark:border dark:border-purple-600 cursor-pointer items-center hover:border-green-700 hover:border rounded-full justify-center'>
+          <div ref={iconRef1} className='flex relative dark:border dark:border-purple-600 cursor-pointer items-center hover:border-green-700 hover:border dark:shadow-purple-500 shadow-glow shadow-slate-300 rounded-full justify-center'>
             <Avatarz height={40} image={user?.profilePic} width={40}/>
             <IoIosArrowDropdownCircle onClick={handleDrop1} className='absolute  rounded-full hover:animate-pulse dark:text-slate-600 text-purple-700 -bottom-1' />
             {avDrop && <AvatarMenu refy1={dropdownRef1}/>}

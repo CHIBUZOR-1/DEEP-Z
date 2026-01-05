@@ -26,10 +26,10 @@ const Homepage = () => {
   return (
     <Layout>
       <div className=' dark:bg-facebookDark-200 min-h-screen w-full dark:text-slate-100'>
-        <div className='w-full sm:bg-slate-100 p-1 flex gap-2'>
-          <div className='w-[60%] max-sm:w-full flex flex-col max-sm:items-center justify-center p-1'>
-            <h2 className='text-4xl dark:text-slate-300 max-sm:text-2xl sm:dark:text-slate-600 font-bold text-slate-600'>Welcome to <span className=' italic dark:text-purple-500 animate-pulse'>Deep-Z</span> Blog</h2>
-            <p className='text-xl dark:text-slate-300 max-sm:text-sm font-medium sm:dark:text-slate-500 italic text-slate-600'>A place to read and deepen your understanding from various articles of unique interest.</p>
+        <div className='w-full shadow-glow shadow-slate-300 sm:bg-slate-100 p-1 flex gap-2'>
+          <div className='w-[60%] max-sm:w-full flex gap-2 flex-col max-sm:items-center justify-center p-1'>
+            <h2 className='text-4xl max-zs:text-xl dark:text-slate-300 max-sm:text-2xl sm:dark:text-slate-600 font-bold text-slate-600'>Welcome to <span className=' italic dark:text-purple-500 animate-pulse'>Deep-Z</span> Blog</h2>
+            <p className='text-xl max-zs:text-xs dark:text-slate-300 max-sm:text-sm font-medium sm:dark:text-slate-500 italic text-slate-600'>A place to read and deepen your understanding from various articles of unique interest.</p>
             <div className='flex p-1'>
               <button className='p-2 max-sm:text-sm font-semibold bg-slate-600 text-slate-100 rounded-md'>View articles</button>
             </div>

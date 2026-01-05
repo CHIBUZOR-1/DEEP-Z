@@ -106,14 +106,14 @@ const Search = () => {
             <aside className='flex sm:flex-col p-2 max-sm:items-center  max-sm:w-full gap-4'>
               <div className='w-full p-1'>
                 <p className='font-semibold dark:text-slate-100'>Sort:</p>
-                <select value={dataz.sort} name='sort' onChange={handleChange}  className='w-full border outline-none dark:bg-slate-600 dark:text-slate-100 border-slate-300 rounded-md' >
+                <select value={dataz.sort} name='sort' onChange={handleChange}  className='w-full p-1 border outline-none dark:bg-slate-600 dark:text-slate-100 border-slate-300 rounded-md' >
                   <option className='dark:bg-slate-600 dark:text-slate-100' value="desc">Latest</option>
                   <option className='dark:bg-slate-600 dark:text-slate-100' value="asc">Oldest</option>
                 </select>
               </div>
               <div className='w-full p-1'>
                 <p className='font-semibold dark:text-slate-100'>categories:</p>
-                <select value={dataz.caty} name='caty' onChange={handleChange}  className='w-full border outline-none dark:bg-slate-600 dark:text-slate-100 border-slate-300 rounded-md' >
+                <select value={dataz.caty} name='caty' onChange={handleChange}  className='w-full border p-1 outline-none dark:bg-slate-600 dark:text-slate-100 border-slate-300 rounded-md' >
                 <option className='dark:bg-slate-600 dark:text-slate-100' value="">none</option>
                 <option className='dark:bg-slate-600 dark:text-slate-100' value="Sports">Sports</option>
                 <option className='dark:bg-slate-600 dark:text-slate-100' value="Entertainment">Entertainment</option>

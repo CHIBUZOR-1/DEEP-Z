@@ -23,20 +23,21 @@ const SIgnIn = () => {
     }
 
     const handleSubmit = async(e) => {
-        e.preventDefault();
-        setLoading(true)
-        const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/users/signIn`, info);
-        if(response.data.success) {
-            toast.success(response.data.message);
-            dispatch(setUser(response.data.details));
-            setLoading(false)
-            navigate('/');
-        } 
-            
-        if(!response.data.success) {
-          setLoading(false)
-          toast.error(response.data.message);
-            
+        try {
+          e.preventDefault();
+          setLoading(true);
+          const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/api/users/signIn`, info);
+          if(data.success) {
+              toast.success(data.message);
+              dispatch(setUser(data.details));
+              console.log(details);
+              setLoading(false);
+              navigate('/');
+          } 
+        } catch (error) {
+          toast.error(data.message);
+        } finally {
+          setLoading(false);
         }
       }
       const handleGoogleLogin = async() => {
@@ -58,6 +59,8 @@ const SIgnIn = () => {
           }
         } catch (error) {
           console.log(error)
+        } finally {
+          setLoading(false);
         }
       }
   return (
@@ -68,7 +71,7 @@ const SIgnIn = () => {
           <p onClick={()=> navigate('/reset-password')} className='text-blue-500 hover:underline cursor-pointer'>forgot password</p>
         </div>
         <button onClick={handleSubmit} className='w-[80%] dark:border-purple-600 dark:border  flex max-sm:text-sm items-center justify-center gap-2 bg-facebookDark-400 active:bg-orange-800 p-2 outline-purple-500 text-white font-semibold rounded-md'>
-            sign in
+            {loading ? 'signing in...' : 'sign in' }
         </button>
             <div className="flex w-full gap-1 items-center">
               <hr  className='border-slate-300 w-full'/>

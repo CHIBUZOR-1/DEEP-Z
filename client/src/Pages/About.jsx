@@ -7,7 +7,7 @@ const About = () => {
     <Layout>
       <div className=' flex max-sm:flex-col gap-3 items-center px-3 justify-center'>
           <div className='border flex justify-center items-center max-sm:h-[300px] max-sm:w-[300px] w-[30%] h-[302px]'>
-            <img src={assets?.deepz} className='h-full' alt="" />
+            <img src={assets?.deepz} className='h-full w-full' alt="" />
           </div>
           <div className='px-3 flex flex-col justify-center items-center gap-2 flex-1 max-sm:text-sm'>
             <div className=' flex justify-center items-center flex-col'>
